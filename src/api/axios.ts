@@ -17,7 +17,7 @@ api.interceptors.request.use((config) => {
 
   if (access) {
     config.headers.Authorization = `Bearer ${access}`;
-    config.headers.environment = 1;
+    config.headers.environment = 3;
   }
 
   // if (env) {
