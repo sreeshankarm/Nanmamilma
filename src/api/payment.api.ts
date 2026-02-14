@@ -45,9 +45,6 @@ export const getPaymentFormHtml = async (balance?: number) => {
   const response = await api.get("/paymentform", {
     params: balance !== undefined ? { balance } : {},
     responseType: "text",
-    headers: {
-      Accept: "text/html",
-    },
   });
 
   return response.data;
