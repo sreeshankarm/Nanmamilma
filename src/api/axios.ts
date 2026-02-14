@@ -17,12 +17,11 @@ api.interceptors.request.use((config) => {
 
   if (access) {
     config.headers.Authorization = `Bearer ${access}`;
-    config.headers.environment = env;
   }
 
-  // if (env) {
-  //   config.headers.environment = env;
-  // }
+  if (env) {
+    config.headers.environment = env;
+  }
   return config;
 });
 
