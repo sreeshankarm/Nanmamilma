@@ -5,8 +5,12 @@ export interface TokenResponse {
 }
 
 export const token = {
-  getAccess: (): string | null =>
-    localStorage.getItem("access_token"),
+  getAccess: (): string | null => localStorage.getItem("access_token"),
+
+  getEnvironment: (): number | null => {
+    const env = localStorage.getItem("environment");
+    return env ? Number(env) : null;
+  },
 
   set: (data: TokenResponse) => {
     localStorage.setItem("access_token", data.access_token);
