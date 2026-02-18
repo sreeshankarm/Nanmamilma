@@ -127,38 +127,7 @@ const Signin = () => {
             )}
           </div>
 
-          {/* PASSWORD */}
-          {/* <div className="mb-6">
-            <label className="text-sm font-medium text-gray-700">
-              Password
-            </label>
-
-            <input
-              type="password"
-              autoComplete="new-password"
-              placeholder="Enter password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 6,
-                  message: "Password must be at least 6 characters",
-                },
-              })}
-              className={`mt-1 w-full rounded-lg border px-3 py-2 text-sm
-                focus:outline-none focus:ring-2
-                ${
-                  errors.password
-                    ? "border-red-400 focus:ring-red-200"
-                    : "border-gray-300 focus:ring-sky-200"
-                }`}
-            />
-
-            {errors.password && (
-              <p className="mt-1 text-xs text-red-500">
-                {errors.password.message}
-              </p>
-            )}
-          </div> */}
+     
 
           {/* PASSWORD */}
           <div className="mb-6">

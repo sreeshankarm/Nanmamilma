@@ -1,9 +1,7 @@
-// import type { Productt } from "../typesss/typesss";
 import type { Product } from "../types";
 
 interface Props {
-  // product: Productt;
-  // onAdd: (p: Productt) => void;
+
   product: Product;
   onAdd: (p: Product) => void;
   onClick?: () => void;

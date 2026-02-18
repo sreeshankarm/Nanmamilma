@@ -1,13 +1,8 @@
 import { Trash2, Edit3 } from "lucide-react";
-// import type { CartItem } from "../typesss/typesss";
 import type { CartItem } from "../types/cart";
-// import { useState } from "react";
 
 interface Props {
-  // items: CartItem[];
-  // onIncrease: (id: string) => void;
-  // onDecrease: (id: string) => void;
-  // onRemove: (id: string) => void;
+
 
   items: CartItem[];
   onIncrease: (item: CartItem) => void;
@@ -25,16 +20,7 @@ export default function CartList({
   onEdit,
   removingId,
 }: Props) {
-  // const [removingId, setRemovingId] = useState<number | null>(null);
 
-  // const handleRemove = async (cartid: number) => {
-  //   setRemovingId(cartid);
-  //   try {
-  //     await onRemove(cartid);
-  //   } finally {
-  //     setRemovingId(null);
-  //   }
-  // };
 
   const getShiftLabel = (shift: number) => {
     switch (shift) {

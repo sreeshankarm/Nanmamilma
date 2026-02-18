@@ -76,20 +76,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // const addToCart = async (
-  //   supplydate: string,
-  //   supplyshift: number,
-  //   productcode: number,
-  //   quantity: number
-  // ) => {
-  //   await addToCartApi({
-  //     supplydate,
-  //     supplyshift,
-  //     productcode,
-  //     quantity,
-  //   });
-  //   await loadCart();
-  // };
+ 
 
   const addToCart = async (
     supplydate: string,

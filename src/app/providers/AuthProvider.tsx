@@ -49,19 +49,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   /* ---------- LOGIN ---------- */
-  // const login = async (mobile: string, password: string) => {
-  //   const payload: LoginPayload = {
-  //     login_mobile: mobile,
-  //     password,
-  //   };
 
-  //   const { data } = await loginApi(payload);
-  //   token.set(data);
-
-  //   const userRes = await getUserApi();
-  //   setUserName(userRes.data.user.user_name);
-  //   setIsAuth(true);
-  // };
 
   const login = async (mobile: string, password: string) => {
     try {
@@ -87,11 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /* ---------- LOGOUT ---------- */
-  // const logout = () => {
-  //   token.clear();
-  //   setIsAuth(false);
-  //   setUserName(null);
-  // };
+ 
 
     const logout = async () => {
     try {

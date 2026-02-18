@@ -163,18 +163,7 @@ const ChangePassword = () => {
             )}
           </div>
 
-          {/* <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`w-full rounded-lg py-2.5 text-sm font-semibold text-white
-            ${
-              isSubmitting
-                ? "bg-gray-400"
-                : "bg-[#8e2d25] hover:bg-[#b91c1c]"
-            }`}
-          >
-            {isSubmitting ? "Updating..." : "Change Password"}
-          </button> */}
+    
 
           <div className="flex gap-3">
             {/* CANCEL */}

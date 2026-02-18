@@ -16,15 +16,12 @@ import { MyProfileView } from "../pages/MyProfileView";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// import { useStore } from "../context/store/store";
-// import type { CartItem } from "../typesss/typesss";
 // import { useRouteLoader } from "../Hooks/useRouteLoader";
 import type { CartItem } from "../types/cart";
 import { useCart } from "../context/cart/useCart";
 
 const MainRouter = () => {
   const [open, setOpen] = useState(false);
-  // const { cart } = useStore();
   const { cart, loadCart } = useCart();
 
   useEffect(() => {
@@ -44,10 +41,7 @@ const MainRouter = () => {
             (sum: number, item: CartItem) => sum + item.quantity,
             0
           )}
-          //           cartCount={cart.reduce(
-          //   (sum, item) => sum + item.quantity,
-          //   0
-          // )}
+     
         />
 
         <main className="p-4">

@@ -21,8 +21,12 @@ const MyOrdersView: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const [tab, setTab] = useState<"UPCOMING" | "PAST">("UPCOMING");
-  const [dateFilter, setDateFilter] = useState("");
+  const [tab, 
+    // setTab
+  ] = useState<"UPCOMING" | "PAST">("UPCOMING");
+  const [dateFilter,
+    //  setDateFilter
+    ] = useState("");
   const [expandedOrderId, setExpandedOrderId] = useState<string | null>(null);
 
   // -------------------------------

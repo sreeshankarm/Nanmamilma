@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { useStore } from "../context/store/store";
 import WalletCard from "../components/WalletCard";
 import QuickActions from "../components/QuickActions";
 import FeedbackBanner from "../components/FeedbackBanner";
@@ -7,11 +6,9 @@ import SearchBar from "../components/SearchBar";
 import ProductCard from "../components/ProductCard"; // ✅ default import
 import SupplyDateCard from "../components/SupplyDateCard";
 
-// import type { Productt } from "../typesss/typesss";
 import ProductModal from "../components/ProductModal";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TopUpModal } from "../components/TopUpModal";
 import { useProduct } from "../context/product/useProduct";
@@ -23,18 +20,14 @@ import { getSettingsApi } from "../api/settings.api";
 export const HomeView: React.FC = () => {
   const { profile } = useProfile();
   const balance = Number(profile?.credit_limit ?? 0);
-  // const {
-  //   balance,
-  //   //  getProducts
-  // } = useStore();
+ 
   const { products, loading, fetchProducts } = useProduct();
   const { addToCart } = useCart();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selected, setSelected] = useState<Product | null>(null);
   const [showTopUp, setShowTopUp] = useState(false);
-  // ✅ Supply Date State
-  // const [supplyDate, setSupplyDate] = useState("2026-01-07");
+  
   const getToday = () => {
     const today = new Date();
     return today.toISOString().split("T")[0]; // YYYY-MM-DD
@@ -47,9 +40,7 @@ export const HomeView: React.FC = () => {
   );
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   fetchProducts("2025-12-04");
-  // }, []);
+
 
   useEffect(() => {
     fetchProducts(supplyDate);
@@ -129,10 +120,7 @@ export const HomeView: React.FC = () => {
         <FeedbackBanner onClick={() => navigate("/feedbackComplaints")} />
 
         {/* Supply Date */}
-        {/* <SupplyDateCard
-          value={supplyDate}
-          onChange={(date) => setSupplyDate(date)}
-        /> */}
+      
         <SupplyDateCard
           value={supplyDate}
           min={minDate}
@@ -144,29 +132,8 @@ export const HomeView: React.FC = () => {
       {/* Search Bar */}
       <SearchBar value={searchTerm} onChange={setSearchTerm} />
 
-      {/* Product Grid */}
 
-      {/* {loading ? (
-        <p className="text-center text-gray-500 text-lg font-medium">
-          Loading products...
-        </p>
-      ) : filtered.length === 0 ? (
-        <div className="w-full flex justify-center items-center py-20">
-          <p className="text-gray-500 text-lg font-medium">No items found</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14 p-4">
-          {filtered.map((p: Product) => (
-            <ProductCard
-              key={p.prod_code}
-              product={p}
-              // onAdd={(prod) => console.log("ADD", prod)}
-              onAdd={() => {}}
-              onClick={() => setSelected(p)}
-            />
-          ))}
-        </div>
-      )} */}
+     
 
       {/* Product Grid */}
 
@@ -210,58 +177,7 @@ export const HomeView: React.FC = () => {
         balance={balance}
       />
 
-      {/* {selected && (
-        <ProductModal
-          product={selected}
-          supplyDate="2025-12-04"
-          onClose={() => setSelected(null)}
-          onConfirm={async (qty, supplyShift) => {
-            try {
-              await addToCart(
-                "2026-01-01", // supplydate
-                supplyShift, // 1 = Morning, 2 = Evening
-                selected.prod_code,
-                qty
-              );
-
-              // toast.success(`🛒 Added to ${qty} item(s) cart`);
-
-              toast.success(
-                supplyShift === 1
-                  ? `🌅 Morning shift – ${qty} item(s) added`
-                  : `🌙 Evening shift – ${qty} item(s) added`
-              );
-              setSelected(null);
-            } catch (err) {
-              toast.error("Failed to add to cart");
-            }
-          }}
-        />
-      )} */}
-
-      {/* {selected && (
-        <ProductModal
-          product={{
-            prod_code: selected.prod_code,
-            prod_name: selected.prod_name,
-            final_rate: Number(selected.final_rate), // 🔥 FIX
-            imagepath: selected.imagepath,
-          }}
-          // supplyDate="2025-12-04"
-          supplyDate={supplyDate}
-          onClose={() => setSelected(null)}
-          onConfirm={async (qty, supplyShift,supplyDate) => {
-            await addToCart(supplyDate, supplyShift, selected.prod_code, qty);
-
-            toast.success(
-              supplyShift === 1
-                ? `🌅 Morning shift – ${qty} item(s) added`
-                : `🌙 Evening shift – ${qty} item(s) added`
-            );
-            setSelected(null);
-          }}
-        />
-      )} */}
+   
 
       {selected && (
         <ProductModal
@@ -290,11 +206,7 @@ export const HomeView: React.FC = () => {
               }
 
               /* ✅ SUCCESS */
-              // toast.success(
-              //   supplyShift === 1
-              //     ? `🌅 Morning shift – ${qty} item(s) added`
-              //     : `🌙 Evening shift – ${qty} item(s) added`
-              // );
+           
 
               toast.success(
                 supplyShift === 1
@@ -310,7 +222,6 @@ export const HomeView: React.FC = () => {
         />
       )}
 
-      {/* <ToastContainer position="top-right" autoClose={1200} /> */}
     </div>
   );
 };

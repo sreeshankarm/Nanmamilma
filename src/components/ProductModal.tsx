@@ -1,20 +1,10 @@
 import { X, Sun, Moon, Clock } from "lucide-react";
 import { useState, useEffect } from "react";
-// import type { Product } from "../typesss/typesss";
 import { getProductDetailsApi } from "../api/product.api";
-
 import type { ModalProduct, ProductDetail } from "../types/product";
-// import type { Product } from "../types/product";
 import { getSettingsApi } from "../api/settings.api";
 
-// interface Props {
-//   product: Product;
-//   supplyDate: string;
-//     initialQty?: number;
-//   initialShift?: number;
-//   onClose: () => void;
-//   onConfirm: (qty: number,supplyShift: number) => void;
-// }
+
 
 interface Props {
   product: ModalProduct;
@@ -36,17 +26,13 @@ export default function ProductModal({
   onClose,
   onConfirm,
 }: Props) {
-  // const [loading, setLoading] = useState(false);
 
   const [detailsLoading, setDetailsLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const [details, setDetails] = useState<ProductDetail | null>(null);
 
-  // const [qty, setQty] = useState(1);
-  // const [shift, setShift] = useState<"morning" | "evening">("morning");
-
-  // const supplyShiftValue = shift === "morning" ? 1 : 2;
+ 
 
   const [qty, setQty] = useState(initialQty ?? 1);
 
@@ -61,29 +47,7 @@ export default function ProductModal({
   const [maxDate, setMaxDate] = useState("");
   const [shiftText, setShiftText] = useState<Record<string, string>>({});
 
-  // useEffect(() => {
-  //   const loadSettings = async () => {
-  //     try {
-  //       const data = await getSettingsApi();
 
-  //       const allowedDays = data?.maxallowedsupplydate ?? 7;
-  //       const today = new Date();
-
-  //       const min = new Date(today);
-  //       const max = new Date(today);
-  //       max.setDate(today.getDate() + (allowedDays - 1));
-
-  //       setMinDate(min.toISOString().split("T")[0]);
-  //       setMaxDate(max.toISOString().split("T")[0]);
-
-  //       setShiftText(data.shiftcodetext || {});
-  //     } catch (error) {
-  //       console.error("Settings load failed:", error);
-  //     }
-  //   };
-
-  //   loadSettings();
-  // }, []);
 
   useEffect(() => {
     const formatDate = (date: Date) => date.toLocaleDateString("en-CA"); // gives YYYY-MM-DD safely
@@ -327,38 +291,7 @@ export default function ProductModal({
         </div>
 
         {/* Confirm Button */}
-        {/* <button
-          disabled={loading}
-          onClick={() => onConfirm(qty,supplyShiftValue)}
-          className="w-full mt-6 bg-black text-white py-3 rounded-xl text-lg font-semibold hover:bg-[#1e3a8a] transition cursor-pointer"
-        >
-          Confirm & Add
-        </button> */}
-
-        {/* <button
-          disabled={submitLoading}
-          onClick={async () => {
-            setSubmitLoading(true);
-            try {
-              await onConfirm(qty, supplyShiftValue, supplyDate);
-            } finally {
-              setSubmitLoading(false);
-            }
-          }}
-          className={`w-full mt-6 py-3 rounded-xl text-lg font-semibold
-    flex items-center justify-center gap-2 text-white transition
-    ${
-      submitLoading
-        ? "bg-gray-700 cursor-not-allowed"
-        : "bg-black hover:bg-[#1e3a8a]"
-    }
-  `}
-        >
-          {submitLoading && (
-            <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          )}
-          {submitLoading ? "Adding..." : "Confirm & Add"}
-        </button> */}
+      
 
         <button
           disabled={submitLoading || (isEdit && !isChanged)}
