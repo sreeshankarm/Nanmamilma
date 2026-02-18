@@ -85,33 +85,30 @@ export default function ProductModal({
   //   loadSettings();
   // }, []);
 
+  useEffect(() => {
+    const formatDate = (date: Date) => date.toLocaleDateString("en-CA"); // gives YYYY-MM-DD safely
 
-  
-useEffect(() => {
-  const formatDate = (date: Date) =>
-    date.toLocaleDateString("en-CA"); // gives YYYY-MM-DD safely
+    const loadSettings = async () => {
+      try {
+        const data = await getSettingsApi();
 
-  const loadSettings = async () => {
-    try {
-      const data = await getSettingsApi();
+        const days = data?.maxallowedsupplydate ?? 7;
+        const today = new Date();
 
-      const days = data?.maxallowedsupplydate ?? 7;
-      const today = new Date();
+        const min = new Date(today);
+        const max = new Date(today);
+        max.setDate(today.getDate() + (days - 1));
 
-      const min = new Date(today);
-      const max = new Date(today);
-      max.setDate(today.getDate() + (days - 1));
+        setMinDate(formatDate(min));
+        setMaxDate(formatDate(max));
+        setShiftText(data?.shiftcodetext || {});
+      } catch (error) {
+        console.error("Settings load failed:", error);
+      }
+    };
 
-      setMinDate(formatDate(min));
-      setMaxDate(formatDate(max));
-      setShiftText(data?.shiftcodetext || {});
-    } catch (error) {
-      console.error("Settings load failed:", error);
-    }
-  };
-
-  loadSettings();
-}, []);
+    loadSettings();
+  }, []);
 
   /* 🔥 CALL PRODUCT DETAILS API */
   useEffect(() => {
@@ -140,6 +137,10 @@ useEffect(() => {
 
   const price = Number(details?.final_rate || product.final_rate);
   const total = price * qty;
+
+  const mrp = Number(details?.mrp || product.mrp);
+  const profitPerUnit = mrp - price;
+  const totalProfit = profitPerUnit * qty;
 
   // const today = new Date().toISOString().split("T")[0];
 
@@ -234,9 +235,9 @@ useEffect(() => {
                 max={maxDate}
                 value={supplyDate}
                 onChange={(e) => setSupplyDate(e.target.value)}
-                 onClick={(e) => e.currentTarget.showPicker()} // 🔥 always open on click
-          onKeyDown={(e) => e.preventDefault()} // block typing
-          onPaste={(e) => e.preventDefault()} // block paste
+                onClick={(e) => e.currentTarget.showPicker()} // 🔥 always open on click
+                onKeyDown={(e) => e.preventDefault()} // block typing
+                onPaste={(e) => e.preventDefault()} // block paste
                 className="border border-gray-300 rounded-lg px-3 py-1 text-sm text-gray-700 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-orange-400 focus:border-orange-400 w-full sm:w-auto"
               />
             </div>
@@ -258,7 +259,10 @@ useEffect(() => {
               >
                 <Sun size={20} />
                 <span className="text-sm font-semibold">Morning Shift</span>
-                <span className="text-xs opacity-90">    {shiftText["1"] || "Loading..."}</span>
+                <span className="text-xs opacity-90">
+                  {" "}
+                  {shiftText["1"] || "Loading..."}
+                </span>
               </button>
 
               {/* Evening */}
@@ -276,7 +280,10 @@ useEffect(() => {
               >
                 <Moon size={20} />
                 <span className="text-sm font-semibold">Evening Shift</span>
-                <span className="text-xs opacity-90">    {shiftText["2"] || "Loading..."}</span>
+                <span className="text-xs opacity-90">
+                  {" "}
+                  {shiftText["2"] || "Loading..."}
+                </span>
               </button>
             </div>
           </div>
@@ -286,7 +293,10 @@ useEffect(() => {
             <div className="flex justify-between text-gray-600">
               <span>MRP</span>
               {/* <span>₹{product.mrp || product.price}</span> */}
-              <span>₹{price.toFixed(2)}</span>
+              <span>
+                {/* ₹{price.toFixed(2)} */}
+                <span>₹{mrp.toFixed(2)}</span>
+              </span>
             </div>
 
             <div className="flex justify-between font-medium">
@@ -298,7 +308,12 @@ useEffect(() => {
             <div className="flex justify-between text-green-600">
               <span>Profit per unit</span>
               {/* <span>₹{(product.mrp || 30) - product.price}</span> */}
-              <span>₹{total.toFixed(2)}</span>
+              <span>₹{profitPerUnit.toFixed(2)}</span>
+            </div>
+
+            <div className="flex justify-between text-green-700 font-semibold">
+              <span>Total Profit</span>
+              <span>₹{totalProfit.toFixed(2)}</span>
             </div>
 
             <hr />

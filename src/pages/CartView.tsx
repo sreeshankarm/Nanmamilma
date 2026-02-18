@@ -40,7 +40,9 @@ export default function CartView() {
     decreaseQty,
     placeOrder,
     updateCart,
-     loading,
+    // loading,
+    cartLoading,
+    removingId,
   } = useCart();
 
   // const [selectedDate, setSelectedDate] = useState(0);
@@ -69,10 +71,20 @@ export default function CartView() {
   //   0
   // );
 
+  // const total = cart.reduce(
+  //   (sum: number, item: CartItem) => sum + item.rate * item.quantity,
+  //   0,
+  // );
+
   const total = cart.reduce(
-    (sum: number, item: CartItem) => sum + item.rate * item.quantity,
+    (sum: number, item: CartItem) =>
+      sum + Number(item.rate) * Number(item.quantity),
     0,
   );
+
+  // Proper rounding to 2 decimals
+  const formattedTotal = Number(total.toFixed(2));
+
   // CONFIRM INDENT -> CREATE ORDER
 
   // const handleConfirm = () => {
@@ -138,17 +150,9 @@ export default function CartView() {
     <div className="max-w-xl mx-auto p-5 space-y-6">
       <h1 className="text-2xl font-bold">Your Cart</h1>
 
-      {/* ------------------ EMPTY CART UI ------------------ */}
-      {/* {cart.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <ShoppingBag size={60} className="text-gray-400 mb-4" />
-          <p className="text-gray-500 text-lg font-medium">Empty Cart</p>
-        </div>
-      )} */}
 
-
-            {/* ------------------ LOADING UI ------------------ */}
-      {loading && (
+      {/* ------------------ LOADING UI ------------------ */}
+      {cartLoading && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <div className="h-10 w-10 border-4 border-[#8e2d26] border-t-transparent rounded-full animate-spin mb-4" />
           <p className="text-gray-500 font-medium">Loading cart...</p>
@@ -156,7 +160,7 @@ export default function CartView() {
       )}
 
       {/* ------------------ EMPTY CART UI ------------------ */}
-      {!loading && cart.length === 0 && (
+      {!cartLoading && cart.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <ShoppingBag size={60} className="text-gray-400 mb-4" />
           <p className="text-gray-500 text-lg font-medium">Empty Cart</p>
@@ -173,7 +177,7 @@ export default function CartView() {
         </div>
       )}
 
-      {!loading && cart.length > 0 && (
+      {!cartLoading && cart.length > 0 && (
         <>
           {/* Cart Items */}
           <CartList
@@ -186,6 +190,7 @@ export default function CartView() {
             onDecrease={(item) => decreaseQty(item)}
             onRemove={(id) => removeFromCart(id)}
             onEdit={(item) => setEditItem(item)}
+            removingId={removingId}
           />
 
           {/* 🟠 EDIT MODAL */}
@@ -365,7 +370,14 @@ export default function CartView() {
           <div className="bg-white border border-gray-200 rounded-xl shadow p-4 space-y-2">
             <div className="flex justify-between text-gray-600">
               <span>Item Total</span>
-              <span>₹{total}</span>
+              {/* <span>₹{total}</span> */}
+              <span>
+                {/* ₹{total} */}₹
+                {formattedTotal.toLocaleString("en-IN", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </span>
             </div>
 
             <div className="flex justify-between text-gray-600">
@@ -376,11 +388,23 @@ export default function CartView() {
             <div className="border-t pt-2">
               <div className="flex justify-between font-semibold text-lg">
                 <span>Grand Total</span>
-                <span>₹{total}</span>
+                <span>
+                  {/* ₹{total} */}₹
+                  {formattedTotal.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
               </div>
 
               <p className="text-green-600 text-sm mt-1">
-                You will have ₹{total} left after deduction
+                {/* You will have ₹{total} left after deduction */}
+                You will have ₹
+                {formattedTotal.toLocaleString("en-IN", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}{" "}
+                left after deduction
               </p>
             </div>
           </div>
@@ -412,8 +436,7 @@ export default function CartView() {
             {!confirmLoading && <ChevronRight size={20} />}
           </button> */}
 
-
-             <button
+          <button
             onClick={handleConfirm}
             disabled={confirmLoading}
             className="w-full bg-[#8e2d26] text-white py-3 rounded-xl text-lg font-semibold
